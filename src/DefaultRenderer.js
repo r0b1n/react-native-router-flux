@@ -149,6 +149,11 @@ export default class DefaultRenderer extends Component {
     }
 
     if (SceneComponent) {
+      if (navigationState.queries && SceneComponent.getFragmentNames) {
+        // this is probably Relay component, render it with renderer.
+        const RelayComponentRenderer = require('./RelayComponentRenderer').default;
+        return <RelayComponentRenderer component={SceneComponent} state={navigationState} />;
+      }
       return (
         <View
           style={[{ flex: 1 }, navigationState.sceneStyle]}
